@@ -495,7 +495,10 @@ var Gantt = (function () {
                     this.duration *
                     (this.task.progress / 100) || 0;
             this.group = createSVG('g', {
-                class: 'bar-wrapper ' + (this.task.custom_class || ''),
+                class:
+                    'bar-wrapper ' +
+                    (this.gantt.options.is_editable ? 'bar-editable ' : '') +
+                    (this.task.custom_class || ''),
                 'data-id': this.task.id,
             });
             this.bar_group = createSVG('g', {
@@ -1294,7 +1297,10 @@ var Gantt = (function () {
 
         bind_events() {
             this.bind_grid_click();
-            this.bind_bar_events();
+
+            if (this.options.is_editable) {
+                this.bind_bar_events();
+            }
         }
 
         render() {
